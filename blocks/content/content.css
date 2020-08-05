@@ -1,0 +1,8 @@
+.content {
+  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: #000;
+  width: 100%;
+  min-width: 320px;
+  max-width: 882px;
+}

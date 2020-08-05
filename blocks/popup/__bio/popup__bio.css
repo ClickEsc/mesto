@@ -1,0 +1,10 @@
+.popup__bio {
+  margin: 29.74px 36px 0;
+  padding: 0 0 13px 0;
+  width: 358px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
