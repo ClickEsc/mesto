@@ -7,6 +7,12 @@
   outline: none;
   background-color: white;
   position: relative;
-  top: 6px;
+  top: 23px;
   right: 21px;
+  transition: .1s linear;
+}
+
+.photo-gallery__like-button:hover {
+  opacity: .6;
+  cursor: pointer;
 }

@@ -23,37 +23,38 @@
       <button class="profile__add-button" type="button"></button>
     </div>
 
-    <div class="photo-gallery">
-      <figure class="photo-gallery__item">
+    <ul class="photo-gallery">
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-        <figcaption class="photo-gallery__caption">Карачаевск</figcaption>
+        <h2 class="photo-gallery__heading">Карачаевск</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
-      <figure class="photo-gallery__item">
+      </li>
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-        <figcaption class="photo-gallery__caption">Гора Эльбрус</figcaption>
+        <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
-      <figure class="photo-gallery__item">
+      </li>
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-        <figcaption class="photo-gallery__caption">Домбай</figcaption>
+        <h2 class="photo-gallery__heading">Домбай</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
-      <figure class="photo-gallery__item">
+      </li>
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-        <figcaption class="photo-gallery__caption">Гора Эльбрус</figcaption>
+        <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
-      <figure class="photo-gallery__item">
+      </li>
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-        <figcaption class="photo-gallery__caption">Домбай</figcaption>
+        <h2 class="photo-gallery__heading">Домбай</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
-      <figure class="photo-gallery__item">
+      </li>
+      <li class="photo-gallery__item">
         <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-        <figcaption class="photo-gallery__caption">Карачаево-&nbsp;Черкесия</figcaption>
+        <h2 class="photo-gallery__heading">Карачаево-&nbsp;Черкесия</h2>
         <button class="photo-gallery__like-button" type="button"></button>
-      </figure>
+      </li>
+    </ul>
   </main>
 
   <footer class="footer">
@@ -61,11 +62,11 @@
   </footer>
   
   <div class="popup">
-    <form class="popup__container">
+    <form class="popup__container" name="profile-edit-form">
       <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input class="popup__username" placeholder="Имя" value="Жак-Ив Кусто"></input>
-      <input class="popup__bio" placeholder="О себе" value="Исследователь океана"></input>
+      <input class="popup__username" name="username" placeholder="Имя" value="Жак-Ив Кусто">
+      <input class="popup__bio" name="bio" placeholder="О себе" value="Исследователь океана">
       <button class="popup__save" type="submit" aria-label="Сохранить изменения">Сохранить</button>
     </form>
   </div>

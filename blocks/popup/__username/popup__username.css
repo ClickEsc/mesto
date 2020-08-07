@@ -12,3 +12,10 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@media screen and (max-width: 550px) {
+  .popup__username {
+    margin: 44px 18px 0;
+    max-width: calc(300px - 18px*2);
+  }
+}

@@ -18,7 +18,7 @@
 @import url(../blocks/photo-gallery/photo-gallery.css);
 @import url(../blocks/photo-gallery/__item/photo-gallery__item.css);
 @import url(../blocks/photo-gallery/__image/photo-gallery__image.css);
-@import url(../blocks/photo-gallery/__caption/photo-gallery__caption.css);
+@import url(../blocks/photo-gallery/__heading/photo-gallery__heading.css);
 @import url(../blocks/photo-gallery/__like-button/photo-gallery__like-button.css);
 
 @import url(../blocks/footer/footer.css);

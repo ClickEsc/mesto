@@ -8,13 +8,15 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  position: relative;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 @media screen and (max-width: 883px) {
   .profile {
     padding: 42px 0 18px;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 }
