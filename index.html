@@ -7,70 +7,70 @@
   <title>Место</title>
 </head>
 <body class="page">
-<div class="page__container">
-  <header class="header">
-    <div class="header__logo"></div>
-  </header>
+  <div class="page__container">
+    <header class="header">
+      <div class="header__logo"></div>
+    </header>
 
-  <main class="content">
-    <div class="profile">
-      <img class="profile__avatar" src="./images/profile__picture.jpg" alt="Фотография пользователя">
-      <div class="profile__info">
-        <h1 class="profile__username">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button" type="button"></button>
-        <p class="profile__bio">Исследователь океана</p>
+    <main class="content">
+      <div class="profile">
+        <img class="profile__avatar" src="./images/profile__picture.jpg" alt="Фотография пользователя">
+        <div class="profile__info">
+          <h1 class="profile__username">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button" type="button"></button>
+          <p class="profile__bio">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" type="button"></button>
       </div>
-      <button class="profile__add-button" type="button"></button>
-    </div>
 
-    <ul class="photo-gallery">
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-        <h2 class="photo-gallery__heading">Карачаевск</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-        <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-        <h2 class="photo-gallery__heading">Домбай</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-        <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-        <h2 class="photo-gallery__heading">Домбай</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-      <li class="photo-gallery__item">
-        <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-        <h2 class="photo-gallery__heading">Карачаево-&nbsp;Черкесия</h2>
-        <button class="photo-gallery__like-button" type="button"></button>
-      </li>
-    </ul>
-  </main>
+      <ul class="photo-gallery">
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
+          <h2 class="photo-gallery__heading">Карачаевск</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
+          <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
+          <h2 class="photo-gallery__heading">Домбай</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
+          <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
+          <h2 class="photo-gallery__heading">Домбай</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+        <li class="photo-gallery__item">
+          <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
+          <h2 class="photo-gallery__heading">Карачаево-&nbsp;Черкесия</h2>
+          <button class="photo-gallery__like-button" type="button"></button>
+        </li>
+      </ul>
+    </main>
 
-  <footer class="footer">
-    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
-  </footer>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
   
-  <div class="popup">
-    <form class="popup__container" name="profile-edit-form">
-      <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input class="popup__username" name="username" placeholder="Имя">
-      <input class="popup__bio" name="bio" placeholder="О себе">
-      <button class="popup__save" type="submit" aria-label="Сохранить изменения">Сохранить</button>
-    </form>
+    <div class="popup">
+      <form class="popup__container" name="profile-edit-form">
+        <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__username" name="username" placeholder="Имя">
+        <input class="popup__bio" name="bio" placeholder="О себе">
+        <button class="popup__save" type="submit" aria-label="Сохранить изменения">Сохранить</button>
+      </form>
+    </div>
+    <script src="./scripts/main.js"></script>  
   </div>
-  <script src="./scripts/main.js"></script>  
-</div>
 </body>
 </html>
