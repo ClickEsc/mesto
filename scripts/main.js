@@ -2,6 +2,13 @@ let popup = document.querySelector('.popup')
 let popupOpenButton = document.querySelector('.profile__edit-button');
 let popupCloseButton = popup.querySelector('.popup__close');
 let popupSaveButton = popup.querySelector('.popup__save');
+let username = document.querySelector('.profile__username');
+let bio = document.querySelector('.profile__bio');
+let nameInput = popup.querySelector('.popup__username');
+let bioInput = popup.querySelector('.popup__bio');
+
+nameInput.value = username.textContent;
+bioInput.value = bio.textContent;
 
 let popupToggle = function(event) {
   popup.classList.toggle('popup_opened');
@@ -19,12 +26,6 @@ let formElement = document.querySelector('.popup__container');
 
 function formSubmitHandler(event) {
   event.preventDefault();
-
-  let username = document.querySelector('.profile__username');
-  let bio = document.querySelector('.profile__bio');
-
-  let nameInput = popup.querySelector('.popup__username');
-  let bioInput = popup.querySelector('.popup__bio');
 
   username.textContent = nameInput.value;
   bio.textContent = bioInput.value;

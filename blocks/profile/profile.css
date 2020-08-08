@@ -1,9 +1,6 @@
 .profile {
   box-sizing: border-box;
-  margin: 0 auto;
-  padding: 36.25px 0;
-  max-width: 882px;
-  background-color: #000;
+  padding: 40px 0;
   color: #fff;
   position: relative;
   display: flex;

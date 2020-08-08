@@ -1,10 +1,7 @@
 .photo-gallery {
   list-style: none;
   box-sizing: border-box;
-  margin: 0 auto;
   padding: 11px 0 60px;
-  max-width: 882px;
-  background-color: #000;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
   column-gap: 18px;
