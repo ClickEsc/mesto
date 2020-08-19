@@ -15,7 +15,10 @@
 
 @media screen and (max-width: 550px) {
   .popup__username {
-    margin: 44px 18px 0;
-    max-width: calc(300px - 18px*2);
+    margin: 31px 20px 0;
+    padding-bottom: 8px;
+    max-width: calc(240px - 20px*2);
+    font-size: 12px;
+    line-height: 15px;
   }
 }

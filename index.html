@@ -13,7 +13,7 @@
     </header>
 
     <main class="content">
-      <div class="profile">
+      <section class="profile">
         <img class="profile__avatar" src="./images/profile__picture.jpg" alt="Фотография пользователя">
         <div class="profile__info">
           <h1 class="profile__username">Жак-Ив Кусто</h1>
@@ -21,39 +21,10 @@
           <p class="profile__bio">Исследователь океана</p>
         </div>
         <button class="profile__add-button" type="button"></button>
-      </div>
+      </section>
 
       <ul class="photo-gallery">
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-          <h2 class="photo-gallery__heading">Карачаевск</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-          <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-          <h2 class="photo-gallery__heading">Домбай</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Elbrus.jpg" alt="Фотография горы Эльбрус в отдалении">
-          <h2 class="photo-gallery__heading">Гора Эльбрус</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Dombay.jpg" alt="Фотография горы за двумя склонами">
-          <h2 class="photo-gallery__heading">Домбай</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
-        <li class="photo-gallery__item">
-          <img class="photo-gallery__image" src="./images/Karachaevsk.jpg" alt="Фотография каменного дома в окружении зелени">
-          <h2 class="photo-gallery__heading">Карачаево-&nbsp;Черкесия</h2>
-          <button class="photo-gallery__like-button" type="button"></button>
-        </li>
+
       </ul>
     </main>
 
@@ -61,15 +32,43 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   
-    <div class="popup">
-      <form class="popup__container" name="profile-edit-form">
-        <button class="popup__close" type="button" aria-label="Закрыть попап"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__username" name="username" placeholder="Имя">
+    <template id="cardTemplate">
+      <li class="photo-gallery__item">
+        <img class="photo-gallery__image">
+        <h2 class="photo-gallery__heading"></h2>
+        <button class="photo-gallery__like-button" type="button"></button>
+        <button class="photo-gallery__remove-button" type="button"></button>
+      </li>
+    </template>
+
+    <div class="popup popup_edit-profile">
+      <form class="popup__container popup__container_edit-profile" name="edit-profile-form">
+        <button class="popup__close popup__close_edit-profile" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title popup__title_edit-profile">Редактировать профиль</h2>
+        <input required class="popup__username" name="username" placeholder="Имя">
         <input class="popup__bio" name="bio" placeholder="О себе">
-        <button class="popup__save" type="submit" aria-label="Сохранить изменения">Сохранить</button>
+        <button class="popup__save popup__save_edit-profile" type="submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
     </div>
+
+    <div class="popup popup_add-card">
+      <form id="addCardForm" class="popup__container popup__container_add-card" name="add-card-form">
+        <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title popup__title_add-card">Новое место</h2>
+        <input required class="popup__place-name" name="place-name" placeholder="Название">
+        <input required class="popup__place-link" name="place-link" placeholder="Ссылка на картинку">
+        <button class="popup__save popup__save_add-card" type="submit" aria-label="Сохранить изменения">Создать</button>
+      </form>
+    </div>
+
+    <div class="popup popup_show-image">
+      <figure class="popup__container popup__container_show-image">
+        <button class="popup__close popup__close_show-image" type="button" aria-label="Закрыть попап"></button>
+        <img class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+    </div>
+
     <script src="./scripts/main.js"></script>  
   </div>
 </body>

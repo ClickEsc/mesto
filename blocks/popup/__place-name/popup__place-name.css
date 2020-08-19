@@ -1,5 +1,5 @@
-.popup__bio {
-  margin: 29.74px 36px 0;
+.popup__place-name {
+  margin: 44px 36px 0;
   padding: 0 0 13px 0;
   width: 358px;
   font-size: 14px;
@@ -14,8 +14,8 @@
 }
 
 @media screen and (max-width: 550px) {
-  .popup__bio {
-    margin: 20px 20px 0;
+  .popup__place-name {
+    margin: 31px 20px 0;
     padding-bottom: 8px;
     max-width: calc(240px - 20px*2);
     font-size: 12px;

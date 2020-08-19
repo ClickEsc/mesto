@@ -4,6 +4,7 @@
   height: auto;
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
