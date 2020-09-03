@@ -1,0 +1,13 @@
+.popup__error-text {
+  display: none;
+  max-width: 100%;
+  margin: 0;
+  /*margin: 5px 36px -22px;*/
+  position: absolute;
+  top: 59px;
+  left: 36px;
+  right: 36px;
+  color: #ff0000;
+  font-size: 12px;
+  line-height: 15px;
+}

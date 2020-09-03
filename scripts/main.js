@@ -80,7 +80,6 @@ const removeCard = (event) => {
   event.target.closest('.photo-gallery__item').remove();
 }
 
-
 // Функция создания карточки
 
 const createCard = (card) => {
@@ -108,11 +107,7 @@ const createCard = (card) => {
   newCardRemoveButton.addEventListener('click', removeCard);
 
   // Просмотр фотографий
-  newCardImage.addEventListener('click', function () {
-    imageShown.src = card.link;
-    imageShown.alt = card.alt;
-    imageShownCaption.textContent = card.name;
-  });
+  newCardImage.addEventListener('click', () => setShowImagePopupValues(card));
 
   newCardImage.addEventListener('click', () => openPopup(showImagePopup));
    
@@ -135,6 +130,15 @@ const openPopup = function(popup) {
 const closePopup = function(popup) {
   popup.classList.remove('popup_opened');
 }
+
+// Слушатель закрытия модальных окон при нажатии Esc
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closePopup(editProfilePopup);
+    closePopup(addCardPopup);
+    closePopup(showImagePopup);
+  }
+});
 
 // Функции попапа редактирования профиля
 
@@ -205,6 +209,13 @@ addCardPopup.addEventListener('click', (event) => {
   }
 });
 
+// Функция попапа просмотра фотографий
+
+const setShowImagePopupValues = function(card) {
+  imageShown.src = card.link;
+  imageShown.alt = card.alt;
+  imageShownCaption.textContent = card.name;
+};
 
 // Слушатели попапа просмотра фотографий
 

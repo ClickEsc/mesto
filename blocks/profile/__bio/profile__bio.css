@@ -2,7 +2,9 @@
   font-size: 18px;
   line-height: 22px;
   margin: 4px 0 0;
-  flex: 1 0 100%;
+  flex: 1 0 70%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 883px) {
