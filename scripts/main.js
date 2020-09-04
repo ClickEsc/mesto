@@ -124,21 +124,32 @@ const addCard = (card) => {
 // Функция открытия модальных окон
 const openPopup = function(popup) {
   popup.classList.add('popup_opened');
+  setEscListener();
 }
 
 // Функция закрытия модальных окон
 const closePopup = function(popup) {
   popup.classList.remove('popup_opened');
+  removeEscListener();
 }
 
-// Слушатель закрытия модальных окон при нажатии Esc
-document.addEventListener('keydown', (event) => {
+// Функция закрытия модальных окон при нажатии Esc
+const closePopupWithEsc = function(event) {
+  const popupOpened = document.querySelector('.popup_opened');
   if (event.key === 'Escape') {
-    closePopup(editProfilePopup);
-    closePopup(addCardPopup);
-    closePopup(showImagePopup);
+    closePopup(popupOpened);
   }
-});
+}
+
+// Функция добавления слушателя нажатия на Esc
+const setEscListener = function() {
+  document.addEventListener('keydown', closePopupWithEsc);
+}
+
+// Функция удаления слушателя нажатия на Esc
+const removeEscListener = function() {
+  document.removeEventListener('keydown', closePopupWithEsc);
+}
 
 // Функции попапа редактирования профиля
 
@@ -192,6 +203,8 @@ const submitAddCardForm = function(event) {
   addCard(addedCard);
    
   addCardForm.reset();
+  addCardPopupSaveButton.setAttribute('disabled', '');
+  addCardPopupSaveButton.classList.add('popup__save_disabled');
   closePopup(addCardPopup);
 }
 
