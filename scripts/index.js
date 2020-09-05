@@ -37,11 +37,12 @@ const initialCardsContainer = document.querySelector('.photo-gallery');
 
 // Переменные попапа редактирования профиля
 
-const editProfileForm = document.querySelector('.popup__container_edit-profile');
+const editProfileForm = document.querySelector('.popup__form_edit-profile');
 
 const editProfilePopup = document.querySelector('.popup_edit-profile');
 const editProfilePopupOpenButton = document.querySelector('.profile__edit-button');
 const editProfilePopupCloseButton = editProfilePopup.querySelector('.popup__close_edit-profile');
+const editProfilePopupSaveButton = editProfilePopup.querySelector('.popup__save');
 
 const username = document.querySelector('.profile__username');
 const bio = document.querySelector('.profile__bio');
@@ -50,7 +51,7 @@ const bioInput = editProfilePopup.querySelector('.popup__bio');
 
 // Переменные попапа добавления карточек
 
-const addCardForm = document.querySelector('.popup__container_add-card');
+const addCardForm = document.querySelector('.popup__form_add-card');
 
 const addCardPopup = document.querySelector('.popup_add-card');
 const addCardPopupOpenButton = document.querySelector('.profile__add-button');
@@ -116,7 +117,6 @@ const createCard = (card) => {
 };
 
 // Функция добавления карточки
-
 const addCard = (card) => {
   initialCardsContainer.prepend(createCard(card));
 } 
@@ -131,6 +131,14 @@ const openPopup = function(popup) {
 const closePopup = function(popup) {
   popup.classList.remove('popup_opened');
   removeEscListener();
+}
+
+// Функция закрытия модальных окон при нажатии на оверлей
+const closePopupFromOverlay = function(event) {
+  const popupOpened = document.querySelector('.popup_opened');
+  if (event.target === event.currentTarget) {
+    closePopup(popupOpened);
+  }
 }
 
 // Функция закрытия модальных окон при нажатии Esc
@@ -177,16 +185,13 @@ editProfileForm.addEventListener('submit', submitEditProfileForm);
 
 editProfilePopupOpenButton.addEventListener('click', () => {
   setEditProfileValues(username, bio);
+  enableSubmitButton(editProfilePopupSaveButton);
   openPopup(editProfilePopup);
 });
 
 editProfilePopupCloseButton.addEventListener('click', () => closePopup(editProfilePopup));
 
-editProfilePopup.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) { 
-    closePopup(editProfilePopup);
-  }
-});
+editProfilePopup.addEventListener('click', closePopupFromOverlay);
 
 // Функции попапа добавления карточек
 
@@ -203,8 +208,7 @@ const submitAddCardForm = function(event) {
   addCard(addedCard);
    
   addCardForm.reset();
-  addCardPopupSaveButton.setAttribute('disabled', '');
-  addCardPopupSaveButton.classList.add('popup__save_disabled');
+  disableSubmitButton(addCardPopupSaveButton);
   closePopup(addCardPopup);
 }
 
@@ -216,11 +220,7 @@ addCardPopupOpenButton.addEventListener('click', () => openPopup(addCardPopup));
 
 addCardPopupCloseButton.addEventListener('click', () => closePopup(addCardPopup));
 
-addCardPopup.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) { 
-    closePopup(addCardPopup);
-  }
-});
+addCardPopup.addEventListener('click', closePopupFromOverlay);
 
 // Функция попапа просмотра фотографий
 
@@ -234,11 +234,7 @@ const setShowImagePopupValues = function(card) {
 
 showImagePopupCloseButton.addEventListener('click', () => closePopup(showImagePopup));
 
-showImagePopup.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) { 
-    closePopup(showImagePopup);
-  }
-});
+showImagePopup.addEventListener('click', closePopupFromOverlay);
 
 
 // Изначальное отображение карточек

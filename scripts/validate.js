@@ -1,63 +1,70 @@
 // Валидация форм
 
-const isInvalid = function(element) {
-  if (!element.validity.valid) {
-    return true;
+// Функция идентификации ошибки
+const isValid = (formElement, inputElement, inputErrorClass, errorClass) => {
+  if (!inputElement.validity.valid) {
+    showErrorMessage(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
+  } else {
+    hideErrorMessage(formElement, inputElement, inputErrorClass, errorClass);
   }
-}
+};
 
 // Функция показа ошибки
-const showErrorMessage = function(inputElement, inputErrorClass, formError, errorClass) {
+const showErrorMessage = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
+  const formError = formElement.querySelector(`#${inputElement.id}-error`);
+  formError.textContent = errorMessage;
   inputElement.classList.add(inputErrorClass);
   formError.classList.add(errorClass);
-}
+};
 
 // Функция очистки ошибки
-const hideErrorMessage = function(inputElement, inputErrorClass, formError, errorClass) {
+const hideErrorMessage = (formElement, inputElement, inputErrorClass, errorClass) => {
+  const formError = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
   formError.classList.remove(errorClass);
+  formError.textContent = '';
+};
+
+// Функция проверки поля ввода на ошибку
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
 }
 
-// Функция блокировки кнопки submit в форме
-const disableSubmitButton = function(formElement, submitButtonSelector, inactiveButtonClass) {
-  const formSubmitButton = formElement.querySelector(submitButtonSelector);
-  formSubmitButton.setAttribute('disabled', '');
-  formSubmitButton.classList.add(inactiveButtonClass);
+// Функция блокировки кнопки submit в форме 
+const disableSubmitButton = function(formSubmitButton) { 
+  formSubmitButton.setAttribute('disabled', ''); 
+  formSubmitButton.classList.add('popup__save_disabled'); 
 }
 
-// Функция разблокировки кнопки submit в форме
-const enableSubmitButton = function(formElement, submitButtonSelector, inactiveButtonClass) {
-  const formSubmitButton = formElement.querySelector(submitButtonSelector);
-  formSubmitButton.removeAttribute('disabled', '');
-  formSubmitButton.classList.remove(inactiveButtonClass);
+// Функция разблокировки кнопки submit в форме 
+const enableSubmitButton = function(formSubmitButton) { 
+  formSubmitButton.removeAttribute('disabled', ''); 
+  formSubmitButton.classList.remove('popup__save_disabled');
+}
+
+// Функция изменения состояния кнопки submit в форме
+function toggleButtonState(formSubmitButton, formElement, inputSelector) {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  if (hasInvalidInput(inputList)) {
+    disableSubmitButton(formSubmitButton);
+  } else {
+    enableSubmitButton(formSubmitButton);
+  }
 }
 
 // Функция setEventListeners
 const setEventListeners = (formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorTextClass, errorClass, ...rest}) => {
-  const getInputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const formSubmitButton = formElement.querySelector(submitButtonSelector);
 
-  getInputList.forEach((inputElement) => {
-    const formError = formElement.querySelector(`#${inputElement.id}-error`);
+  toggleButtonState(formSubmitButton, formElement, inputSelector, inactiveButtonClass);
 
+  inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      if (inputElement.value === '') {
-        showErrorMessage(inputElement, inputErrorClass, formError, errorClass);
-        formError.textContent = 'Вы пропустили это поле.';
-      } else if (inputElement.validity.tooShort) {
-        showErrorMessage(inputElement, inputErrorClass, formError, errorClass);
-        formError.textContent = 'Минимальное количество символов: 2. Длина текста сейчас: 1 символ.';
-      } else if (inputElement.type === 'url' && !inputElement.value.startsWith('http')) {
-        showErrorMessage(inputElement, inputErrorClass, formError, errorClass);
-        formError.textContent = 'Введите адрес сайта.';
-      } else {
-        hideErrorMessage(inputElement, inputErrorClass, formError, errorClass);
-      }
-      
-      if (getInputList.some(isInvalid)) {
-        disableSubmitButton(formElement, submitButtonSelector, inactiveButtonClass);
-      } else {
-        enableSubmitButton(formElement, submitButtonSelector, inactiveButtonClass);
-      }
+      isValid(formElement, inputElement, inputErrorClass, errorClass);
+      toggleButtonState(formSubmitButton, formElement, inputSelector, inactiveButtonClass);
     })
   })
 }
@@ -75,10 +82,8 @@ const enableValidation = ({formSelector, ...rest}) => {
   })
 }
 
-enableValidation(enableValidation);
-
 enableValidation({
-  formSelector: '.popup__container',
+  formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector:'.popup__save',
   inactiveButtonClass: 'popup__save_disabled',

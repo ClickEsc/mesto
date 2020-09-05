@@ -42,7 +42,7 @@
     </template>
 
     <div class="popup popup_edit-profile">
-      <form novalidate class="popup__container popup__container_edit-profile" name="edit-profile-form">
+      <form novalidate class="popup__form popup__form_edit-profile" name="edit-profile-form">
         <button class="popup__close popup__close_edit-profile" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title popup__title_edit-profile">Редактировать профиль</h2>
         <div class="popup__wrap">
@@ -58,7 +58,7 @@
     </div>
 
     <div class="popup popup_add-card">
-      <form novalidate id="addCardForm" class="popup__container popup__container_add-card" name="add-card-form">
+      <form novalidate id="addCardForm" class="popup__form popup__form_add-card" name="add-card-form">
         <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title popup__title_add-card">Новое место</h2>
         <div class="popup__wrap">
@@ -69,7 +69,7 @@
           <input required id="place-link-input" type="url" class="popup__input popup__place-link" name="place-link" placeholder="Ссылка на картинку">
           <span id="place-link-input-error" class="popup__error-text popup__error-text_place-link"></span>
         </div>
-        <button disabled class="popup__save popup__save_disabled popup__save_add-card" type="submit" aria-label="Сохранить изменения">Создать</button>
+        <button class="popup__save popup__save_add-card" type="submit" aria-label="Сохранить изменения">Создать</button>
       </form>
     </div>
 
@@ -81,7 +81,7 @@
       </figure>
     </div>
 
-    <script src="./scripts/main.js"></script>  
+    <script src="./scripts/index.js"></script>  
     <script src="./scripts/validate.js"></script>
   </div>
 </body>
