@@ -1,39 +1,59 @@
+import { Card } from './Card.js';
+
+import { openPopup } from './utils.js'
+
+import { showImagePopup, showImagePopupCloseButton, imageShown, imageShownCaption } from './utils.js'
+
 // Глобальные переменные
 
 const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-    alt: 'Фотография многообразных горных склонов, Архыз'
+    alt: 'Фотография многообразных горных склонов, Архыз',
+    isLiked: false
   },
   {
     name: 'Челябинская область',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-    alt: 'Фотография реки, уходящей вдаль, с высокими каменистыми заснеженными берегами и лесом, Челябинская область'
+    alt: 'Фотография реки, уходящей вдаль, с высокими каменистыми заснеженными берегами и лесом, Челябинская область',
+    isLiked: false
   },
   {
     name: 'Иваново',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-    alt: 'Фотография ряда типовых жилых многоэтажных домов в сумерках, вид сверху анфас, Иваново'
+    alt: 'Фотография ряда типовых жилых многоэтажных домов в сумерках, вид сверху анфас, Иваново',
+    isLiked: false
   },
   {
     name: 'Камчатка',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-    alt: 'Фотография земли и растительности на подходе к холму и горе с заснеженными склонами вдали, Камчатка'
+    alt: 'Фотография земли и растительности на подходе к холму и горе с заснеженными склонами вдали, Камчатка',
+    isLiked: false
   },
   {
     name: 'Холмогорский район',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-    alt: 'Фотография железнодорожного пути среди лесов, вид сверху, Холмогорский район'
+    alt: 'Фотография железнодорожного пути среди лесов, вид сверху, Холмогорский район',
+    isLiked: false
   },
   {
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-    alt: 'Фотография яркого неба и горного утёса, омываемого водой, на лесистой заснеженной береговой линии'
+    alt: 'Фотография яркого неба и горного утёса, омываемого водой, на лесистой заснеженной береговой линии',
+    isLiked: false
   },
 ];
 
 const initialCardsContainer = document.querySelector('.photo-gallery');
+
+// Экземпляры класса Card для каждой карточки
+initialCards.forEach((item) => {
+  item = new Card(item.name, item.link, item.alt, item.isLiked);
+  item.render(initialCardsContainer);
+});
+
+
 
 // Переменные попапа редактирования профиля
 
@@ -61,71 +81,11 @@ const addCardPopupSaveButton = addCardPopup.querySelector('.popup__save_add-card
 const placeNameInput = addCardPopup.querySelector('.popup__place-name');
 const placeLinkInput = addCardPopup.querySelector('.popup__place-link');
 
-// Переменные попапа просмотра фотографий
-
-const showImagePopup = document.querySelector('.popup_show-image');
-const showImagePopupCloseButton = showImagePopup.querySelector('.popup__close_show-image');
-const imageShown = showImagePopup.querySelector('.popup__image');
-const imageShownCaption = showImagePopup.querySelector('.popup__caption');
 
 
-// Функции
 
-// Функция обработки состояния лайка
-const handleLikeButton = (event) => {
-  event.target.closest('.photo-gallery__like-button').classList.toggle('photo-gallery__like-button_clicked');
-}
 
-// Функция удаления карточки
-const removeCard = (event) => {
-  event.target.closest('.photo-gallery__item').remove();
-}
 
-// Функция создания карточки
-
-const createCard = (card) => {
-  const newCard = document.querySelector('#cardTemplate').content.cloneNode(true);
-
-  //  Переменные новой карточки
-  const newCardTitle = newCard.querySelector('.photo-gallery__heading');
-  const newCardImage = newCard.querySelector('.photo-gallery__image');
-  const newCardLikeButton = newCard.querySelector('.photo-gallery__like-button');
-  const newCardRemoveButton = newCard.querySelector('.photo-gallery__remove-button');
-  
-  // Переменные значений элемента массива
-  const cardTitle = card.name;
-  const cardLink = card.link;
-  const cardAlt = card.alt;
-
-  newCardTitle.textContent = cardTitle;
-  newCardImage.setAttribute('src', cardLink);
-  newCardImage.setAttribute('alt', cardAlt);
-
-  // Проставление лайков
-  newCardLikeButton.addEventListener('click', handleLikeButton);
-
-  // Удаление карточки
-  newCardRemoveButton.addEventListener('click', removeCard);
-
-  // Просмотр фотографий
-  newCardImage.addEventListener('click', () => setShowImagePopupValues(card));
-
-  newCardImage.addEventListener('click', () => openPopup(showImagePopup));
-   
-  return newCard;
-
-};
-
-// Функция добавления карточки
-const addCard = (card) => {
-  initialCardsContainer.prepend(createCard(card));
-} 
-
-// Функция открытия модальных окон
-const openPopup = function(popup) {
-  popup.classList.add('popup_opened');
-  setEscListener();
-}
 
 // Функция закрытия модальных окон
 const closePopup = function(popup) {
@@ -150,7 +110,7 @@ const closePopupWithEsc = function(event) {
 }
 
 // Функция добавления слушателя нажатия на Esc
-const setEscListener = function() {
+export const setEscListener = function() {
   document.addEventListener('keydown', closePopupWithEsc);
 }
 
@@ -185,7 +145,10 @@ editProfileForm.addEventListener('submit', submitEditProfileForm);
 
 editProfilePopupOpenButton.addEventListener('click', () => {
   setEditProfileValues(username, bio);
-  enableSubmitButton(editProfilePopupSaveButton);
+
+  editProfilePopupSaveButton.removeAttribute('disabled', ''); 
+  editProfilePopupSaveButton.classList.remove('popup__save_disabled');
+
   openPopup(editProfilePopup);
 });
 
@@ -198,17 +161,23 @@ editProfilePopup.addEventListener('click', closePopupFromOverlay);
 const submitAddCardForm = function(event) {
   event.preventDefault();
 
-  const addedCard = {
-    name: placeNameInput.value,
-    link: placeLinkInput.value,
-    alt: 'Фотография из места под названием' + ' ' + placeNameInput.value
-  }
+  const addedCard = new Card(
+    placeNameInput.value, 
+    placeLinkInput.value, 
+    'Фотография из места под названием' + ' ' + placeNameInput.value, 
+    false);
 
-  createCard(addedCard);
-  addCard(addedCard);
+  addedCard.render(initialCardsContainer);
+
+
+  //createCard(addedCard);
+  //addCard(addedCard);
    
   addCardForm.reset();
-  disableSubmitButton(addCardPopupSaveButton);
+  
+  addCardPopupSaveButton.setAttribute('disabled', ''); 
+  addCardPopupSaveButton.classList.add('popup__save_disabled'); 
+
   closePopup(addCardPopup);
 }
 
@@ -235,8 +204,3 @@ const setShowImagePopupValues = function(card) {
 showImagePopupCloseButton.addEventListener('click', () => closePopup(showImagePopup));
 
 showImagePopup.addEventListener('click', closePopupFromOverlay);
-
-
-// Изначальное отображение карточек
-
-initialCards.forEach(addCard);
