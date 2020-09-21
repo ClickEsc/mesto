@@ -1,15 +1,14 @@
 import { openPopup } from './utils.js'
-import { showImagePopup, imageShown, imageShownCaption } from './utils.js'
+import { showImagePopup, imageShown, imageShownCaption } from './constants.js'
 
 export class Card {
 
-  static _template = document.querySelector('#cardTemplate').content;
-  
-  constructor(name, link, alt, isLiked) {
+  constructor(name, link, alt, isLiked, cardTemplate) {
     this._name = name;
     this._link = link;
     this._alt = alt;
     this._isLiked = isLiked;
+    this._cardTemplate = document.querySelector(cardTemplate).content;
   }
 
   // Удаление карточки
@@ -19,9 +18,8 @@ export class Card {
   
   // Проставление лайков
   _likeCardClickHandler = (event) => {
-    event.target.closest('.photo-gallery__like-button').classList.toggle('photo-gallery__like-button_clicked');
+    this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
     this._isLiked = !this._isLiked;
-    console.log(this._isLiked);
   }
 
   // Просмотр фотографий
@@ -31,23 +29,22 @@ export class Card {
     imageShownCaption.textContent = this._name;
   }
   
-  render = (initialCardsContainer) => {
-    this._view = Card._template.cloneNode(true).children[0];
+  createCard = () => {
+    this._view = this._cardTemplate.cloneNode(true).children[0];
+
+    this._cardImage = this._view.querySelector('.photo-gallery__image');
+    this._likeButton = this._view.querySelector('.photo-gallery__like-button');
+
     this._view.querySelector('.photo-gallery__heading').textContent = this._name;
-    //console.log(this._name);
-    this._view.querySelector('.photo-gallery__image').setAttribute('src', this._link);
-    //console.log(this._link);
-    this._view.querySelector('.photo-gallery__image').setAttribute('alt', this._alt);
-    //console.log(this._alt);
+    this._cardImage.setAttribute('src', this._link);
+    this._cardImage.setAttribute('alt', this._alt);
 
     this._view.querySelector('.photo-gallery__remove-button').addEventListener('click', this._delCardClickHandler);
-    this._view.querySelector('.photo-gallery__like-button').addEventListener('click', this._likeCardClickHandler);
-    this._view.querySelector('.photo-gallery__image').addEventListener('click', this._showImageClickHandler);
-    this._view.querySelector('.photo-gallery__image').addEventListener('click', () => openPopup(showImagePopup));
+    this._likeButton.addEventListener('click', this._likeCardClickHandler);
+    this._cardImage.addEventListener('click', this._showImageClickHandler);
+    this._cardImage.addEventListener('click', () => openPopup(showImagePopup));
 
-    // Просмотр фотографий
-    
-    initialCardsContainer.prepend(this._view);
+    return this._view;
   }
 }
 

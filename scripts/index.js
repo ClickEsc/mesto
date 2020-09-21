@@ -1,8 +1,10 @@
+import { openPopup } from './utils.js';
+
+import { showImagePopup, showImagePopupCloseButton } from './constants.js';
+
 import { Card } from './Card.js';
 
-import { openPopup } from './utils.js'
-
-import { showImagePopup, showImagePopupCloseButton, imageShown, imageShownCaption } from './utils.js'
+import { formData, FormValidator } from './FormValidator.js';
 
 // Глобальные переменные
 
@@ -47,12 +49,12 @@ const initialCards = [
 
 const initialCardsContainer = document.querySelector('.photo-gallery');
 
-// Экземпляры класса Card для каждой карточки
-initialCards.forEach((item) => {
-  item = new Card(item.name, item.link, item.alt, item.isLiked);
-  item.render(initialCardsContainer);
-});
 
+// Экземпляры класса Card для каждой карточки
+initialCards.forEach((item) => { 
+  const card = new Card(item.name, item.link, item.alt, item.isLiked, '#cardTemplate'); 
+  initialCardsContainer.prepend(card.createCard());
+}); 
 
 
 // Переменные попапа редактирования профиля
@@ -80,11 +82,6 @@ const addCardPopupSaveButton = addCardPopup.querySelector('.popup__save_add-card
 
 const placeNameInput = addCardPopup.querySelector('.popup__place-name');
 const placeLinkInput = addCardPopup.querySelector('.popup__place-link');
-
-
-
-
-
 
 
 // Функция закрытия модальных окон
@@ -165,13 +162,10 @@ const submitAddCardForm = function(event) {
     placeNameInput.value, 
     placeLinkInput.value, 
     'Фотография из места под названием' + ' ' + placeNameInput.value, 
-    false);
+    false,
+    '#cardTemplate');
 
-  addedCard.render(initialCardsContainer);
-
-
-  //createCard(addedCard);
-  //addCard(addedCard);
+  initialCardsContainer.prepend(addedCard.createCard());
    
   addCardForm.reset();
   
@@ -191,16 +185,19 @@ addCardPopupCloseButton.addEventListener('click', () => closePopup(addCardPopup)
 
 addCardPopup.addEventListener('click', closePopupFromOverlay);
 
-// Функция попапа просмотра фотографий
-
-const setShowImagePopupValues = function(card) {
-  imageShown.src = card.link;
-  imageShown.alt = card.alt;
-  imageShownCaption.textContent = card.name;
-};
-
 // Слушатели попапа просмотра фотографий
 
 showImagePopupCloseButton.addEventListener('click', () => closePopup(showImagePopup));
 
 showImagePopup.addEventListener('click', closePopupFromOverlay);
+
+
+// Валидация форм
+
+// Экземпляр класса FormValidator для попапа редактирования профиля
+const editProfileFormValidator = new FormValidator(formData, editProfileForm);
+editProfileFormValidator.enableValidation(editProfileForm);
+
+// Экземпляр класса FormValidator для попапа просмотра фотографий
+const addCardFormValidator = new FormValidator(formData, addCardForm);
+addCardFormValidator.enableValidation(addCardForm);

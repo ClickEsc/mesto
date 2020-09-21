@@ -1,7 +1,4 @@
-import { addCardForm } from './utils.js';
-import { editProfileForm } from './utils.js';
-
-const formData = {
+export const formData = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector:'.popup__save',
@@ -11,7 +8,7 @@ const formData = {
   errorClass: 'popup__error-text_visible'
 }
 
-class FormValidator {
+export class FormValidator {
 
   constructor(formData, formElement) {
     this._formData = formData;
@@ -114,9 +111,8 @@ class FormValidator {
   // Публичный метод валидации формы
   enableValidation = () => {
     this._getFormList = Array.from(document.querySelectorAll(this._formSelector));
-    console.log(this._getFormList);
-    this._getFormList.forEach((formElement) => {
 
+    this._getFormList.forEach((formElement) => {
       formElement.addEventListener('submit', (event) => {
         event.preventDefault();
       })
@@ -125,11 +121,3 @@ class FormValidator {
     })
   }
 }
-
-// Экземпляр класса FormValidator для попапа редактирования профиля
-const editProfileFormValidator = new FormValidator(formData, editProfileForm);
-editProfileFormValidator.enableValidation(editProfileForm);
-
-// Экземпляр класса FormValidator для попапа просмотра фотографий
-const addCardFormValidator = new FormValidator(formData, addCardForm);
-addCardFormValidator.enableValidation(addCardForm);
