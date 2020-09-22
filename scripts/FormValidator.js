@@ -110,14 +110,10 @@ export class FormValidator {
   
   // Публичный метод валидации формы
   enableValidation = () => {
-    this._getFormList = Array.from(document.querySelectorAll(this._formSelector));
-
-    this._getFormList.forEach((formElement) => {
-      formElement.addEventListener('submit', (event) => {
-        event.preventDefault();
-      })
-  
-    this._setEventListeners();
+    this._formElement.addEventListener('submit', (event) => {
+      event.preventDefault();
     })
+    
+    this._setEventListeners();
   }
 }

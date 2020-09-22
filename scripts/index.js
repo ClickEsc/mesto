@@ -196,8 +196,8 @@ showImagePopup.addEventListener('click', closePopupFromOverlay);
 
 // Экземпляр класса FormValidator для попапа редактирования профиля
 const editProfileFormValidator = new FormValidator(formData, editProfileForm);
-editProfileFormValidator.enableValidation(editProfileForm);
+editProfileFormValidator.enableValidation();
 
 // Экземпляр класса FormValidator для попапа просмотра фотографий
 const addCardFormValidator = new FormValidator(formData, addCardForm);
-addCardFormValidator.enableValidation(addCardForm);
+addCardFormValidator.enableValidation();
