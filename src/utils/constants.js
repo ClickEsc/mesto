@@ -5,6 +5,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 
 // Глобальные переменные
+
 export const initialCards = [
   {
     name: 'Архыз',
