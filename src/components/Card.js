@@ -1,14 +1,11 @@
-import { openPopup } from './utils.js'
-import { showImagePopup, imageShown, imageShownCaption } from './constants.js'
-
-export class Card {
-
-  constructor(name, link, alt, isLiked, cardTemplate) {
+export default class Card {
+  constructor(name, link, alt, isLiked, cardTemplate, handleCardClick) {
     this._name = name;
     this._link = link;
     this._alt = alt;
     this._isLiked = isLiked;
     this._cardTemplate = document.querySelector(cardTemplate).content;
+    this._handleCardClick = handleCardClick;
   }
 
   // Удаление карточки
@@ -21,14 +18,8 @@ export class Card {
     this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
     this._isLiked = !this._isLiked;
   }
-
-  // Просмотр фотографий
-  _showImageClickHandler = () => {
-    imageShown.src = this._link;
-    imageShown.alt = this._alt;
-    imageShownCaption.textContent = this._name;
-  }
   
+  // Создание карточки
   createCard = () => {
     this._view = this._cardTemplate.cloneNode(true).children[0];
 
@@ -41,10 +32,8 @@ export class Card {
 
     this._view.querySelector('.photo-gallery__remove-button').addEventListener('click', this._delCardClickHandler);
     this._likeButton.addEventListener('click', this._likeCardClickHandler);
-    this._cardImage.addEventListener('click', this._showImageClickHandler);
-    this._cardImage.addEventListener('click', () => openPopup(showImagePopup));
+    this._cardImage.addEventListener('click', this._handleCardClick);
 
     return this._view;
   }
 }
-

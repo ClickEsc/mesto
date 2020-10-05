@@ -65,28 +65,14 @@ export class FormValidator {
       return !inputElement.validity.valid;
     });
   }
-  
-  // Приватный метод блокировки кнопки submit в форме 
-  _disableSubmitButton = (formSubmitButton) => { 
-    this._formSubmitButton = formSubmitButton;
-    this._formSubmitButton.setAttribute('disabled', ''); 
-    this._formSubmitButton.classList.add('popup__save_disabled'); 
- }
-
-  // Приватный метод разблокировки кнопки submit в форме 
-  _enableSubmitButton = (formSubmitButton) => { 
-    this._formSubmitButton = formSubmitButton;
-    formSubmitButton.removeAttribute('disabled', ''); 
-    formSubmitButton.classList.remove('popup__save_disabled');
-  }
 
   // Приватный метод изменения состояния кнопки submit в форме
   _toggleButtonState() {
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     if (this._hasInvalidInput(this._inputList)) {
-      this._disableSubmitButton(this._formSubmitButton);
+      this.disableSubmitButton(this._formSubmitButton);
     } else {
-      this._enableSubmitButton(this._formSubmitButton);
+      this.enableSubmitButton(this._formSubmitButton);
     }
   }
   
@@ -107,13 +93,27 @@ export class FormValidator {
       })
     })
   }
+    
+  // Публичный метод разблокировки кнопки submit в форме 
+  enableSubmitButton = (formSubmitButton) => { 
+    this._formSubmitButton = formSubmitButton;
+    formSubmitButton.removeAttribute('disabled', ''); 
+    formSubmitButton.classList.remove('popup__save_disabled');
+  }
+  
+  // Публичный метод блокировки кнопки submit в форме 
+  disableSubmitButton = (formSubmitButton) => { 
+    this._formSubmitButton = formSubmitButton;
+    this._formSubmitButton.setAttribute('disabled', ''); 
+    this._formSubmitButton.classList.add('popup__save_disabled'); 
+ }
   
   // Публичный метод валидации формы
   enableValidation = () => {
     this._formElement.addEventListener('submit', (event) => {
       event.preventDefault();
     })
-    
+
     this._setEventListeners();
   }
 }
