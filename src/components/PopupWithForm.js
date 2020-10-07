@@ -1,5 +1,7 @@
 import Popup from './Popup.js';
 
+import { formData } from '../utils/constants.js';
+
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, formSubmitHandler) {
     super(popupSelector);
@@ -8,20 +10,19 @@ export default class PopupWithForm extends Popup {
     this._formSubmitHandler = formSubmitHandler;
   }
 
-  _getInputValues() {
-    
+  _getInputValues = (event) => {
+    this._formSubmitHandler(event);
   }
 
   close() {
-    this._popup.classList.remove('popup_opened');
+    super.close();
     this._form.reset();
   }
 
   setEventListeners() {
-    this._closeButton = this._popup.querySelector('.popup__close');
-    this._closeButton.addEventListener('click', () => this.close());
-    this._popup.addEventListener('click', () => this._handleOvelayClose(event));
-    document.addEventListener('keydown', () => this._handleEscClose(event));
-    this._form.addEventListener('submit', this._formSubmitHandler);
+    super.setEventListeners();
+    this._form.addEventListener('submit', () => {
+      this._getInputValues(event);
+    });
   }
 }

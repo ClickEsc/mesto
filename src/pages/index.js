@@ -1,11 +1,20 @@
-import './pages/index.css';
+import './index.css';
 
 import { 
   initialCards, 
+  formData,
+
   initialCardsContainerSelector,
+  cardTemplateSelector,
+  editProfilePopupSelector,
+  addCardPopupSelector,
+  showImagePopupSelector,
 
   editProfileForm,
   editProfilePopupOpenButton,
+  editProfilePopupSaveButton,
+  nameInput,
+  bioInput,
   profileInfo,
 
   addCardPopupOpenButton,
@@ -13,33 +22,28 @@ import {
   placeNameInput,
   placeLinkInput,
 
-  showImagePopupCloseButton } from './utils/constants.js';
+  showImagePopupCloseButton } from '../utils/constants.js';
 
-import Section from './components/Section.js';
+import Section from '../components/Section.js';
 
-import Card from './components/Card.js';
+import Card from '../components/Card.js';
 
-import Popup from './components/Popup.js';
+import Popup from '../components/Popup.js';
 
-import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
-import PopupWithForm from './components/PopupWithForm.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
-import UserInfo from './components/UserInfo.js';
+import UserInfo from '../components/UserInfo.js';
 
-import { formData, FormValidator } from './components/FormValidator.js';
+import FormValidator from '../components/FormValidator.js';
 
 // Глобальные переменные
 
 const initialCardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item.name, item.link, item.alt, item.isLiked, '#cardTemplate', handleCardClick);
-    const cardElement = card.createCard();
-    initialCardList.addItem(cardElement);
-    cardElement.addEventListener('click', () => {
-      handleCardClick(card);
-    });
+    createCard(item.name, item.link, cardTemplateSelector, handleCardClick);
   }
 }, initialCardsContainerSelector);
 
@@ -47,29 +51,34 @@ const handleCardClick = (card) => {
   showImagePopup.open(card);
 }
 
+function createCard(name, link, cardTemplateSelector, handleCardClick) {
+  const card = new Card(name, link, cardTemplateSelector, handleCardClick);
+  const cardElement = card.createCard();
+  initialCardList.addItem(cardElement);
+}
+
 const userInfo = new UserInfo(profileInfo);
-
-
 
 const submitEditProfileForm = function(event) {
   event.preventDefault();
   
-  userInfo.setUserInfo();
+  userInfo.setUserInfo({ username: nameInput.value, bio: bioInput.value });
   
   editProfilePopup.close();
 }
 
-const editProfilePopup = new PopupWithForm('.popup_edit-profile', submitEditProfileForm);
-
-
-
-
-
+const editProfilePopup = new PopupWithForm(editProfilePopupSelector, submitEditProfileForm);
 
 // Слушатели попапа редактирования профиля
 editProfilePopupOpenButton.addEventListener('click', () => {
-  userInfo.getUserInfo();
-  editProfileFormValidator.enableValidation();
+  editProfileFormValidator.resetForm();
+
+  const getUserInfo = userInfo.getUserInfo();
+  nameInput.value = getUserInfo.username;
+  bioInput.value = getUserInfo.bio;
+
+  editProfileFormValidator.enableSubmitButton(editProfilePopupSaveButton);
+
   editProfilePopup.open();
 });
 
@@ -77,18 +86,12 @@ editProfilePopupOpenButton.addEventListener('click', () => {
 // Функции попапа добавления карточек
 const submitAddCardForm = function(event) {
   event.preventDefault();
-
-  const addedCard = new Card(
+  
+  createCard(
     placeNameInput.value, 
     placeLinkInput.value, 
-    'Фотография из места под названием' + ' ' + placeNameInput.value, 
-    false,
-    '#cardTemplate',
+    cardTemplateSelector,
     handleCardClick);
-
-  initialCardList.addItem(addedCard.createCard());
-
-  addCardForm.reset();
   
   addCardFormValidator.disableSubmitButton(addCardPopupSaveButton);
 
@@ -96,14 +99,17 @@ const submitAddCardForm = function(event) {
 }
 
 // Попап добавления карточек
-export const addCardPopup = new PopupWithForm('.popup_add-card', submitAddCardForm);
+const addCardPopup = new PopupWithForm(addCardPopupSelector, submitAddCardForm);
 
 // Слушатели попапа добавления карточек
-addCardPopupOpenButton.addEventListener('click', () => addCardPopup.open());
+addCardPopupOpenButton.addEventListener('click', () => {
+  addCardFormValidator.resetForm();
+  addCardPopup.open();
+});
 
 
 // Попап просмотра фотографий
-export const showImagePopup = new PopupWithImage('.popup_show-image');
+const showImagePopup = new PopupWithImage(showImagePopupSelector);
 
 
 // Добавление слушателей в попапы

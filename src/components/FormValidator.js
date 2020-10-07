@@ -1,15 +1,6 @@
-export const formData = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector:'.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
-  inputErrorClass: 'popup__input_invalid',
-  errorTextClass: 'popup__error-text',
-  errorClass: 'popup__error-text_visible'
-}
+import { formData } from '../utils/constants.js'
 
-export class FormValidator {
-
+export default class FormValidator {
   constructor(formData, formElement) {
     this._formData = formData;
     this._formElement = formElement;
@@ -98,15 +89,23 @@ export class FormValidator {
   enableSubmitButton = (formSubmitButton) => { 
     this._formSubmitButton = formSubmitButton;
     formSubmitButton.removeAttribute('disabled', ''); 
-    formSubmitButton.classList.remove('popup__save_disabled');
+    formSubmitButton.classList.remove(formData.inactiveButtonClass);
   }
   
   // Публичный метод блокировки кнопки submit в форме 
   disableSubmitButton = (formSubmitButton) => { 
     this._formSubmitButton = formSubmitButton;
     this._formSubmitButton.setAttribute('disabled', ''); 
-    this._formSubmitButton.classList.add('popup__save_disabled'); 
+    this._formSubmitButton.classList.add(formData.inactiveButtonClass); 
  }
+
+  resetForm() {
+    this._inputList.forEach((inputElement) => {
+      this._hideErrorMessage(inputElement, formData.inputErrorClass, formData.errorClass)
+      this._toggleButtonState();
+    });
+    this._formElement.reset();
+  }
   
   // Публичный метод валидации формы
   enableValidation = () => {

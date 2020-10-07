@@ -1,6 +1,8 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this._handleOvelayClose = this._handleOvelayClose.bind(this);
   }
 
   // Добавление слушателя нажатия на Esc
@@ -44,6 +46,5 @@ export default class Popup {
     this._closeButton = this._popup.querySelector('.popup__close');
     this._closeButton.addEventListener('click', () => this.close());
     this._popup.addEventListener('click', () => this._handleOvelayClose(event));
-    document.addEventListener('keydown', () => this._handleEscClose(event));
   }
 }
