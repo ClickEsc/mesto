@@ -13,7 +13,7 @@ export default class Card {
   }
   
   // Проставление лайков
-  _likeCardClickHandler = (event) => {
+  _likeCardClickHandler = () => {
     this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
   }
 
@@ -21,7 +21,7 @@ export default class Card {
     this._view.querySelector('.photo-gallery__remove-button').addEventListener('click', this._delCardClickHandler);
     this._likeButton.addEventListener('click', this._likeCardClickHandler);
     this._cardImage.addEventListener('click', () => {
-      this._handleCardClick(this);
+      this._handleCardClick({ name: this._name, link: this._link });
     });
   }
   

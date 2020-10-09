@@ -17,18 +17,15 @@ import {
   bioInput,
   profileInfo,
 
+  addCardForm,
   addCardPopupOpenButton,
   addCardPopupSaveButton,
   placeNameInput,
-  placeLinkInput,
-
-  showImagePopupCloseButton } from '../utils/constants.js';
+  placeLinkInput } from '../utils/constants.js';
 
 import Section from '../components/Section.js';
 
 import Card from '../components/Card.js';
-
-import Popup from '../components/Popup.js';
 
 import PopupWithImage from '../components/PopupWithImage.js';
 
@@ -51,16 +48,19 @@ const handleCardClick = (card) => {
   showImagePopup.open(card);
 }
 
-function createCard(name, link, cardTemplateSelector, handleCardClick) {
+const createCard = (name, link) => {
   const card = new Card(name, link, cardTemplateSelector, handleCardClick);
   const cardElement = card.createCard();
-  initialCardList.addItem(cardElement);
+  return cardElement
 }
+
+initialCards.forEach(({ name, link }) => {
+  initialCardList.addItem(createCard(name, link));
+});
 
 const userInfo = new UserInfo(profileInfo);
 
-const submitEditProfileForm = function(event) {
-  event.preventDefault();
+const submitEditProfileForm = function(editProfileForm) {
   
   userInfo.setUserInfo({ username: nameInput.value, bio: bioInput.value });
   
@@ -84,14 +84,8 @@ editProfilePopupOpenButton.addEventListener('click', () => {
 
 
 // Функции попапа добавления карточек
-const submitAddCardForm = function(event) {
-  event.preventDefault();
-  
-  createCard(
-    placeNameInput.value, 
-    placeLinkInput.value, 
-    cardTemplateSelector,
-    handleCardClick);
+const submitAddCardForm = function(addCardForm) {
+  initialCardList.addItem(createCard(placeNameInput.value, placeLinkInput.value));
   
   addCardFormValidator.disableSubmitButton(addCardPopupSaveButton);
 
