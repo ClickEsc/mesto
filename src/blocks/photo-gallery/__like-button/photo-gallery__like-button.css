@@ -6,9 +6,8 @@
   border: none;
   outline: none;
   background-color: white;
-  position: relative;
-  top: 31px;
-  right: 22.24px;
+  display: flex;
+  margin-bottom: 3px;
   transition: .1s linear;
 }
 

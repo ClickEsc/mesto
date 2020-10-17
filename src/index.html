@@ -14,9 +14,10 @@
     <main class="content">
       <section class="profile">
         <img class="profile__avatar" src="./images/profile__picture.jpg" alt="Фотография пользователя">
+        <button class="profile__edit-button profile__edit-button_avatar" type="button"></button>
         <div class="profile__info">
           <h1 class="profile__username">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" type="button"></button>
+          <button class="profile__edit-button profile__edit-button_user-info" type="button"></button>
           <p class="profile__bio">Исследователь океана</p>
         </div>
         <button class="profile__add-button" type="button"></button>
@@ -35,7 +36,10 @@
       <li class="photo-gallery__item">
         <img class="photo-gallery__image">
         <h2 class="photo-gallery__heading"></h2>
-        <button class="photo-gallery__like-button" type="button"></button>
+        <div class="photo-gallery__like-container">
+          <button class="photo-gallery__like-button" type="button"></button>
+          <p class="photo-gallery__like-counter">0</p>
+        </div>
         <button class="photo-gallery__remove-button" type="button"></button>
       </li>
     </template>
@@ -79,6 +83,27 @@
         <figcaption class="popup__caption"></figcaption>
       </figure>
     </div>
+
+    <div class="popup popup_load-avatar">
+      <form novalidate id="loadAvatarForm" class="popup__form popup__form_load-avatar" name="load-avatar-form">
+        <button class="popup__close popup__close_load-avatar" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title popup__title_load-avatar">Обновить аватар</h2>
+        <div class="popup__wrap">
+          <input required id="avatar-link-input" type="url" class="popup__input popup__avatar-link" name="avatar" placeholder="Ссылка на картинку">
+          <span id="avatar-link-input-error" class="popup__error-text popup__error-text_avatar-link"></span>
+        </div>
+        <button class="popup__save popup__save_load-avatar" type="submit" aria-label="Сохранить изменения">Сохранить</button>
+      </form>
+    </div>
+
+    <div class="popup popup_confirm">
+      <div class="popup__container popup__container_confirm">
+        <button class="popup__close popup__close_confirm" type="button" aria-label="Закрыть попап"></button>
+        <h2 class="popup__title popup__title_confirm">Вы уверены?</h2>
+        <button class="popup__save popup__save_confirm" type="submit" aria-label="Сохранить изменения">Да</button>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

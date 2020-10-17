@@ -1,32 +1,5 @@
 // Глобальные переменные
 
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
-];
-
 export const formData = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -44,11 +17,13 @@ export const popupSelector = document.querySelector('.popup');
 export const editProfilePopupSelector = '.popup_edit-profile';
 export const addCardPopupSelector = '.popup_add-card';
 export const showImagePopupSelector = '.popup_show-image';
+export const confirmPopupSelector = '.popup_confirm';
+export const loadAvatarPopupSelector = '.popup_load-avatar';
 
 
 // Переменные попапа редактирования профиля
 export const editProfileForm = document.querySelector('.popup__form_edit-profile');
-export const editProfilePopupOpenButton = document.querySelector('.profile__edit-button');
+export const editProfilePopupOpenButton = document.querySelector('.profile__edit-button_user-info');
 export const editProfilePopupCloseButton = document.querySelector('.popup__close_edit-profile');
 export const editProfilePopupSaveButton = document.querySelector('.popup__save');
 
@@ -58,6 +33,7 @@ export const bioInput = document.querySelector('.popup__bio');
 export const profileInfo = {
   username: '.profile__username',
   bio: '.profile__bio',
+  avatar: '.profile__avatar'
 };
 
 // Переменные попапа добавления карточек
@@ -72,3 +48,12 @@ export const placeLinkInput = document.querySelector('.popup__place-link');
 export const showImagePopupCloseButton = document.querySelector('.popup__close_show-image');
 export const imageShown = document.querySelector('.popup__image');
 export const imageShownCaption = document.querySelector('.popup__caption');
+
+// Переменные попапа подтверждения удаления карточек
+
+// Переменные попапа замены аватара
+export const loadAvatarForm = document.querySelector('.popup__form_load-avatar');
+export const loadAvatarPopupOpenButton = document.querySelector('.profile__edit-button_avatar');
+export const loadAvatarPopupSaveButton = document.querySelector('.popup__save_load-avatar');
+
+export const avatarInput = document.querySelector('.popup__avatar-link');
