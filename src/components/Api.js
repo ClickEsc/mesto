@@ -51,21 +51,10 @@ export default class Api {
     return fetch(`${this.baseUrl}/cards/${card._id}`, {
       method: 'DELETE',
       headers: this.headers,
-      body: JSON.stringify({
-        _id: card._id,
-        owner: {
-          _id: card.owner._id
-        }
-      })
     })
-      
-      .then((res) => {
-        this.card = card;
-        console.log(res.status);
-        if (this.card.owner._id === res.owner._id) {
-          return res.json();
-        }
-      })
+    .then((res) => {
+      this._showError(res);
+    })
   }
 
   // Получить данные пользователя
@@ -126,7 +115,7 @@ export default class Api {
         this._showError(res);
       })
       .then((res) => {
-        this.likes.length = res + 1;
+        this.likes.length = res.likes.length + 1;
       })
   }
 
@@ -143,7 +132,7 @@ export default class Api {
         this._showError(res);
       })
       .then((res) => {
-        this.likes.length = res - 1;
+        this.likes.length = res.likes.length - 1;
       })
   }
 }

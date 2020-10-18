@@ -70,14 +70,16 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
 
 
 
-
 const getMyId = () => {
   api
     .getUserInfo()
     .then((res) => {
+      console.log(res._id)
       return res._id
     })
 }
+
+getMyId();
 
 // Отрисовка на странице начальных карточек
 
@@ -102,9 +104,10 @@ initialCards
           }, 
           handleLikeClick: (item) => {
             api.putLikes(item)
-               .then((res) => {
-                  return res += 1;
-                })
+              .then((res) => {
+                console.log(res)
+                item.likes.length = res.likes.length + 1
+              })
           },
           handleDeleteIconClick: (item) => {
             handleConfirmDelCard(item); 
@@ -122,7 +125,13 @@ initialCards
         handleCardClick: (card) => {
           showImagePopup.open(card)
         },
-        handleLikeClick: card.handleLikeClick, 
+        handleLikeClick: (card) => {
+          api.putLikes(card)
+              .then((res) => {
+                console.log(res);
+                item.likes.length = res.likes.length + 1
+            })
+        }, 
         handleDeleteIconClick: (card) => {
           handleConfirmDelCard(card);
         } 
@@ -240,16 +249,17 @@ const createdByMe = function(card) {
 const handleConfirmDelCard = (card) => {
   const confirmDelCardPopup = new PopupWithSubmit(
     confirmPopupSelector, {
-    submitDelCard: () => {
+      formSubmitHandler: () => {
       api.deleteCard(card)
-         .then((res) => {
-           card._id.value = res._id
-           console.log(res._id)
-         })
-      console.log(confirmDelCardPopup.close());
-      confirmDelCardPopup.close();
+        .then((res) => {
+          console.log(res.status)
+        })
+        .catch((err) => {
+          console.log('Что-то пошло не так. Текст ошибки:' + err)
+        });
     }
   })
+  /*confirmDelCardPopup.close(); */
   confirmDelCardPopup.open();
   confirmDelCardPopup.setEventListeners();
 }
