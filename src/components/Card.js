@@ -31,19 +31,19 @@ export default class Card {
       this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
       api.putLike(this._data)
          .then((res) => {
-           if (this._data.owner._id !== '6937c4952c5ef72e3d6f90c9') {
-            api.deleteLike(this._data)
-            .then ((res) => {
-              res.likes.length -= 1;
-              this._likeCounter.textContent = res.likes.length
-            })
-           }
           res.likes.length += 1;
           this._likeCounter.textContent = res.likes.length
          })
          .catch((err) => {
            console.log(err)
          })
+      if (this._data.owner._id === '6937c4952c5ef72e3d6f90c9') {
+        api.deleteLike(this._data)
+          .then ((res) => {
+            res.likes.length -= 1;
+            this._likeCounter.textContent = res.likes.length
+          })
+      }
     });
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._data);
