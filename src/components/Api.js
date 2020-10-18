@@ -104,35 +104,23 @@ export default class Api {
 
   // Лайкнуть карточку
   putLike(card) {
-    return fetch(`${this.baseUrl}/cards/like/${card._id}`, {
+    return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
       method: 'PUT',
       headers: this.headers,
-      body: JSON.stringify({
-        likes: card.likes
-      })
     })
       .then((res) => {
         this._showError(res);
-      })
-      .then((res) => {
-        this.likes.length = res.likes.length + 1;
       })
   }
 
   // Убрать лайк карточки
   deleteLike(card) {
-    return fetch(`${this.baseUrl}/cards/like/${card._id}`, {
+    return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
       method: 'DELETE',
       headers: this.headers,
-      body: JSON.stringify({
-        likes: card.likes
-      })
     })
       .then((res) => {
         this._showError(res);
-      })
-      .then((res) => {
-        this.likes.length = res.likes.length - 1;
       })
   }
 }

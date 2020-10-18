@@ -61,20 +61,14 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
   const card = new Card({ data, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardTemplate);
   const cardElement = card.createCard();
 
-  /*if (data.owner._id !== '6937c4952c5ef72e3d6f90c9') {
-    card.deleteRemoveButtons();
-  }*/
-
   return cardElement;
 }
-
 
 
 const getMyId = () => {
   api
     .getUserInfo()
     .then((res) => {
-      console.log(res._id)
       return res._id
     })
 }
@@ -103,11 +97,14 @@ initialCards
             showImagePopup.open(item);
           }, 
           handleLikeClick: (item) => {
+            console.log(item.likes)
             api.putLikes(item)
               .then((res) => {
-                console.log(res)
-                item.likes.length = res.likes.length + 1
+                item.likes.length += 1
               })
+              .catch((err) => {
+                console.log('Что-то пошло не так. Текст ошибки:' + err)
+              });
           },
           handleDeleteIconClick: (item) => {
             handleConfirmDelCard(item); 
@@ -127,10 +124,12 @@ initialCards
         },
         handleLikeClick: (card) => {
           api.putLikes(card)
-              .then((res) => {
-                console.log(res);
-                item.likes.length = res.likes.length + 1
+            .then((res) => {
+              card.likes.length += 1
             })
+            .catch((err) => {
+              console.log('Что-то пошло не так. Текст ошибки:' + err)
+            });
         }, 
         handleDeleteIconClick: (card) => {
           handleConfirmDelCard(card);
@@ -251,9 +250,6 @@ const handleConfirmDelCard = (card) => {
     confirmPopupSelector, {
       formSubmitHandler: () => {
       api.deleteCard(card)
-        .then((res) => {
-          console.log(res.status)
-        })
         .catch((err) => {
           console.log('Что-то пошло не так. Текст ошибки:' + err)
         });
@@ -263,10 +259,6 @@ const handleConfirmDelCard = (card) => {
   confirmDelCardPopup.open();
   confirmDelCardPopup.setEventListeners();
 }
-
-// Попап для подтверждения удаления карточки
-
-
 
 
 // Добавление слушателей в попапы

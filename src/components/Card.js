@@ -1,4 +1,4 @@
-import { api } from '../pages/index.js';
+import { api } from "../pages";
 
 export default class Card {
   constructor({ data, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardTemplate) {
@@ -14,12 +14,6 @@ export default class Card {
     this._handleDeleteIconClick = handleDeleteIconClick;
   }
 
-  // Приватный метод для наложения нужных классов на иконку лайка
-  // 1. Вызывается при создании карточки и при обновлении лайков
-  // ....................
-  // убрать для чужой карточки
-
-
   // Убрать иконку корзины
   deleteRemoveButtons = () => {
     if (this._data.owner._id !== '6937c4952c5ef72e3d6f90c9') {
@@ -29,11 +23,27 @@ export default class Card {
 
   _setEventListeners = () => {
     this._removeButton.addEventListener('click', () => {
-      this._handleDeleteIconClick(this._data);
+      this._handleDeleteIconClick.bind(this._data);
+      /*this._view.remove();
+      this._view = null;*/
     });
     this._likeButton.addEventListener('click', () => {
-      this._handleLikeClick(this._data);
       this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
+      api.putLike(this._data)
+         .then((res) => {
+           if (this._data.owner._id !== '6937c4952c5ef72e3d6f90c9') {
+            api.deleteLike(this._data)
+            .then ((res) => {
+              res.likes.length -= 1;
+              this._likeCounter.textContent = res.likes.length
+            })
+           }
+          res.likes.length += 1;
+          this._likeCounter.textContent = res.likes.length
+         })
+         .catch((err) => {
+           console.log(err)
+         })
     });
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._data);
