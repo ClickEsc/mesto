@@ -10,7 +10,7 @@ export default class Api {
       return res.json();
     }
       console.log(res);
-      return Promise.reject(`Что-то пошло не так. Текст ошибки: ${res.status}`)
+      return Promise.reject(new Error(`Ошибка: ${res.status}`));
   }
 
   // Получить список всех карточек в виде массива
@@ -19,42 +19,26 @@ export default class Api {
       method: 'GET',
       headers: this.headers
     })
-    
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Что-то пошло не так. Текст ошибки: ${res.status}`)
-      }
-    });
+      .then(res => this._showError(res))
   }
 
   // Добавить карточку
-  postCard({name, link}) {
+  postCard(card) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({
-        name: name,
-        link: link
-      })
+      body: JSON.stringify(card)
     })
       .then(res => this._showError(res))
-      .then((res) => {
-        this.name = res.name;
-        this.link = res.link;
-      })
   }
 
   // Удалить карточку
   deleteCard(card) {
     return fetch(`${this.baseUrl}/cards/${card._id}`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: this.headers
     })
-    .then((res) => {
-      this._showError(res);
-    })
+      .then(res => this._showError(res))
   }
 
   // Получить данные пользователя
@@ -67,39 +51,23 @@ export default class Api {
   }
 
   // Заменить данные пользователя
-  editUserInfo({name, about}) {
+  editUserInfo({ name, about }) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify({
-        name: name,
-        about: about
-      })
+      body: JSON.stringify({ name, about })
     })
-      .then((res) => {
-        this._showError(res)
-      })
-      .then((res) => {
-        this.name = res.name;
-        this.about = res.about;
-      })
+      .then(res => this._showError(res))
   }
 
   // Заменить аватар
-  changeUserAvatar(link) {
+  changeUserAvatar({ avatar }) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify({
-        avatar: link
-      })
+      body: JSON.stringify({ avatar })
     })
-      .then((res) => {
-        this._showError(res);
-      })
-      .then((res) => {
-        this.link = res;
-      })
+      .then(res => this._showError(res))
   }
 
   // Лайкнуть карточку
@@ -108,9 +76,7 @@ export default class Api {
       method: 'PUT',
       headers: this.headers,
     })
-      .then((res) => {
-        this._showError(res);
-      })
+      .then(res => this._showError(res))
   }
 
   // Убрать лайк карточки
@@ -119,8 +85,6 @@ export default class Api {
       method: 'DELETE',
       headers: this.headers,
     })
-      .then((res) => {
-        this._showError(res);
-      })
+      .then(res => this._showError(res))
   }
 }

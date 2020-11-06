@@ -1,17 +1,14 @@
-import { formData } from '../utils/constants.js'
-
 export default class FormValidator {
-  constructor(formData, formElement) {
+  constructor({ formData }, formElement) {
     this._formData = formData;
     this._formElement = formElement;
-
-    this._formSelector = formData.formSelector;
-    this._inputSelector = formData.inputSelector;
-    this._submitButtonSelector = formData.submitButtonSelector;
-    this._inactiveButtonClass = formData.inactiveButtonClass;
-    this._inputErrorClass = formData.inputErrorClass;
-    this._errorTextClass = formData.errorTextClass;
-    this._errorClass = formData.errorClass;
+    this._formSelector = this._formData.formSelector;
+    this._inputSelector = this._formData.inputSelector;
+    this._submitButtonSelector = this._formData.submitButtonSelector;
+    this._inactiveButtonClass = this._formData.inactiveButtonClass;
+    this._inputErrorClass = this._formData.inputErrorClass;
+    this._errorTextClass = this._formData.errorTextClass;
+    this._errorClass = this._formData.errorClass;
   }
 
   // Приватный метод показа ошибки
@@ -23,8 +20,8 @@ export default class FormValidator {
     this._errorClass = errorClass;
     this._formError = this._formElement.querySelector(`#${this._inputElement.id}-error`);
     this._formError.textContent = this._errorMessage;
-    this._inputElement.classList.add(this._formData.inputErrorClass);
-    this._formError.classList.add(this._formData.errorClass);
+    this._inputElement.classList.add(this._inputErrorClass);
+    this._formError.classList.add(this._errorClass);
   };
 
   // Приватный метод очистки ошибки
@@ -33,8 +30,8 @@ export default class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._formError = this._formElement.querySelector(`#${this._inputElement.id}-error`);
-    this._inputElement.classList.remove(this._formData.inputErrorClass);
-    this._formError.classList.remove(this._formData.errorClass);
+    this._inputElement.classList.remove(this._inputErrorClass);
+    this._formError.classList.remove(this._errorClass);
     this._formError.textContent = '';
   };
 
@@ -89,19 +86,19 @@ export default class FormValidator {
   enableSubmitButton = (formSubmitButton) => { 
     this._formSubmitButton = formSubmitButton;
     formSubmitButton.removeAttribute('disabled', ''); 
-    formSubmitButton.classList.remove(formData.inactiveButtonClass);
+    formSubmitButton.classList.remove(this._inactiveButtonClass);
   }
   
   // Публичный метод блокировки кнопки submit в форме 
   disableSubmitButton = (formSubmitButton) => { 
     this._formSubmitButton = formSubmitButton;
     this._formSubmitButton.setAttribute('disabled', ''); 
-    this._formSubmitButton.classList.add(formData.inactiveButtonClass); 
+    this._formSubmitButton.classList.add(this._inactiveButtonClass); 
  }
 
   resetForm() {
     this._inputList.forEach((inputElement) => {
-      this._hideErrorMessage(inputElement, formData.inputErrorClass, formData.errorClass)
+      this._hideErrorMessage(inputElement, this._inputErrorClass, this._errorClass)
       this._toggleButtonState();
     });
     this._formElement.reset();
@@ -113,6 +110,6 @@ export default class FormValidator {
       event.preventDefault();
     })
 
-    this._setEventListeners();
+    this._setEventListeners(this._inputErrorClass, this._errorClass);
   }
 }

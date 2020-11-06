@@ -1,13 +1,13 @@
-import { api } from "../pages";
-
 export default class Card {
-  constructor({ data, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardTemplate) {
+  constructor({ data, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardTemplate, userId, cardList) {
     this._data = data;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._id = data._id;
     this._data.owner._id = data.owner._id;
+    this._userId = userId;
+    this._cardList = cardList;
     this._cardTemplate = cardTemplate;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
@@ -15,39 +15,46 @@ export default class Card {
   }
 
   // Убрать иконку корзины
-  deleteRemoveButtons = () => {
-    if (this._data.owner._id !== '6937c4952c5ef72e3d6f90c9') {
+  _deleteRemoveButtons = () => {
+    if (this._data.owner._id !== this._userId) {
       this._removeButton.style.display = 'none';
     }
   }
 
+  // Посчитать количество лайков
+  countLikes = () => {
+    this._likeCounter.textContent = this._likes.length;
+  }
+   
+  // Проверить состояние лайка
+  checkLikeState = () => {
+    if (this._likeButton.classList.contains('photo-gallery__like-button_clicked')) {
+      return true
+    } else {
+      this._likeButton.classList.add('photo-gallery__like-button_clicked')
+      return false
+    }
+  }
+
   _setEventListeners = () => {
-    this._removeButton.addEventListener('click', () => {
-      this._handleDeleteIconClick.bind(this._data);
-      /*this._view.remove();
-      this._view = null;*/
+    this._removeButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      this._handleDeleteIconClick(this._data);
     });
+
     this._likeButton.addEventListener('click', () => {
-      this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
-      api.putLike(this._data)
-         .then((res) => {
-          res.likes.length += 1;
-          this._likeCounter.textContent = res.likes.length
-         })
-         .catch((err) => {
-           console.log(err)
-         })
-      if (this._data.owner._id === '6937c4952c5ef72e3d6f90c9') {
-        api.deleteLike(this._data)
-          .then ((res) => {
-            res.likes.length -= 1;
-            this._likeCounter.textContent = res.likes.length
-          })
-      }
-    });
+      this._handleLikeClick(this._data);
+    })
+
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._data);
     })
+  }
+
+  // Удаление карточки
+  deleteCardElement() {
+    this._view.remove();
+    this._view = null;
   }
 
   // Создание карточки
@@ -64,7 +71,7 @@ export default class Card {
     this._cardImage.setAttribute('alt', 'Фотография из места под названием' + ' ' + this._name);
     this._likeCounter.textContent = this._likes.length;
 
-    this.deleteRemoveButtons();
+    this._deleteRemoveButtons();
     this._setEventListeners();
 
     return this._view;

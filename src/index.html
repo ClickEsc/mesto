@@ -13,12 +13,12 @@
 
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile__picture.jpg" alt="Фотография пользователя">
+        <img class="profile__avatar" src="#" alt="Фотография пользователя">
         <button class="profile__edit-button profile__edit-button_avatar" type="button"></button>
         <div class="profile__info">
-          <h1 class="profile__username">Жак-Ив Кусто</h1>
+          <h1 class="profile__username"></h1>
           <button class="profile__edit-button profile__edit-button_user-info" type="button"></button>
-          <p class="profile__bio">Исследователь океана</p>
+          <p class="profile__bio"></p>
         </div>
         <button class="profile__add-button" type="button"></button>
       </section>
@@ -49,11 +49,11 @@
         <button class="popup__close popup__close_edit-profile" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title popup__title_edit-profile">Редактировать профиль</h2>
         <div class="popup__wrap">
-          <input required id="username-input" class="popup__input popup__username" name="username" placeholder="Имя" minlength="2" maxlength="40">
+          <input required id="username-input" class="popup__input popup__username" name="name" placeholder="Имя" minlength="2" maxlength="40">
           <span id="username-input-error" class="popup__error-text popup__error-text_username"></span>
         </div>
         <div class="popup__wrap">
-          <input required id="bio-input" class="popup__input popup__bio" name="bio" placeholder="О себе" minlength="2" maxlength="200">
+          <input required id="bio-input" class="popup__input popup__bio" name="about" placeholder="О себе" minlength="2" maxlength="200">
           <span id="bio-input-error" class="popup__error-text popup__error-text_bio"></span>
         </div>
         <button class="popup__save popup__save_edit-profile" type="submit" aria-label="Сохранить изменения">Сохранить</button>
@@ -65,11 +65,11 @@
         <button class="popup__close popup__close_add-card" type="button" aria-label="Закрыть попап"></button>
         <h2 class="popup__title popup__title_add-card">Новое место</h2>
         <div class="popup__wrap">
-          <input required id="place-name-input" class="popup__input popup__place-name" name="place-name" placeholder="Название" minlength="1" maxlength="30">
+          <input required id="place-name-input" class="popup__input popup__place-name" name="name" placeholder="Название" minlength="1" maxlength="30">
           <span id="place-name-input-error" class="popup__error-text popup__error-text_place-name"></span>
         </div>
         <div class="popup__wrap">
-          <input required id="place-link-input" type="url" class="popup__input popup__place-link" name="place-link" placeholder="Ссылка на картинку">
+          <input required id="place-link-input" type="url" class="popup__input popup__place-link" name="link" placeholder="Ссылка на картинку">
           <span id="place-link-input-error" class="popup__error-text popup__error-text_place-link"></span>
         </div>
         <button class="popup__save popup__save_add-card" type="submit" aria-label="Сохранить изменения">Создать</button>
