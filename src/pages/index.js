@@ -85,7 +85,7 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
       const confirmDelCardPopup = new PopupWithSubmit(
         confirmPopupSelector, {
           formSubmitHandler: () => {
-          return api.deleteCard(data)
+            return api.deleteCard(data)
             .then(() => {
               return card.deleteCardElement();
             })

@@ -1,4 +1,4 @@
-.popup__container_confirm {
+.popup__form_confirm {
   margin: 0 auto;
   position: absolute;
   top: calc((100vh - 330px) / 2);
