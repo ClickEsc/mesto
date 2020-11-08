@@ -22,8 +22,9 @@ export default class Card {
   }
 
   // Посчитать количество лайков
-  countLikes = () => {
-    this._likeCounter.textContent = this._likes.length;
+  countLikes = (likes) => {
+    this._likeButton.classList.toggle('photo-gallery__like-button_clicked');
+    this._likeCounter.textContent = likes.length;
   }
    
   // Проверить состояние лайка
@@ -31,7 +32,6 @@ export default class Card {
     if (this._likeButton.classList.contains('photo-gallery__like-button_clicked')) {
       return true
     } else {
-      this._likeButton.classList.add('photo-gallery__like-button_clicked')
       return false
     }
   }

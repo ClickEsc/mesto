@@ -64,8 +64,7 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
       if (card.checkLikeState() === false) {
         api.putLike(data)
         .then((res) => {
-          res.likes.length += 1
-          card.countLikes();
+          card.countLikes(res.likes);
         })
         .catch((err) => {
           console.log(`Ошибка при добавлении лайка: ${err}`)
@@ -73,8 +72,7 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
       } else {
         api.deleteLike(data)
         .then((res) => {
-          res.likes.length -= 1
-          card.countLikes();
+          card.countLikes(res.likes);
         })
         .catch((err) => {
           console.log(`Ошибка при удалении лайка: ${err}`)
@@ -85,14 +83,14 @@ const createCard = ({ data, handleCardClick, handleLikeClick, handleDeleteIconCl
       const confirmDelCardPopup = new PopupWithSubmit(
         confirmPopupSelector, {
           formSubmitHandler: () => {
-            return api.deleteCard(data)
+            api.deleteCard(data)
             .then(() => {
-              return card.deleteCardElement();
+              card.deleteCardElement();
             })
-            .catch(err => console.log(`Ошибка при удалении карточки: ${err}`))
-            .finally(() => {
+            .then(() => {
               confirmDelCardPopup.close();
             })
+            .catch(err => console.log(`Ошибка при удалении карточки: ${err}`))
           }
       })
       confirmDelCardPopup.setEventListeners();
@@ -143,13 +141,13 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
               showLoadingState(true, addCardPopupSaveButton);
               api.postCard(data)
                  .then((info) => {
-                   return createCard({
+                    createCard({
                       data: info,
                     }, 
                       cardTemplateSelector, info.owner._id, initialCardList);
                   })
                 .then(() => {
-                  return addCardPopup.close();
+                  addCardPopup.close();
                 })
                 .catch(err => console.log(`Ошибка при добавлении новой карточки: ${err}`))
                 .finally(() => {
@@ -170,6 +168,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
           addCardPopup.open();
           });
         })
+        .catch(err => console.log(`Ошибка при добавлении новой карточки: ${err}`))
         
           
 // Изменение информации о пользователе
@@ -178,17 +177,17 @@ const userInfo = new UserInfo(profileInfo);
 
 const editProfilePopup = new PopupWithForm(editProfilePopupSelector, {
   formSubmitHandler: (data) => {
-    showLoadingState(true, addCardPopupSaveButton);
+    showLoadingState(true, editProfilePopupSaveButton);
     api.editUserInfo({ name: data.name, about: data.about })
       .then((info) => {
-        return userInfo.setUserInfo({ username: info.name, bio: info.about })
+        userInfo.setUserInfo({ username: info.name, bio: info.about })
       })
       .then(() => {
-        return editProfilePopup.close()
+        editProfilePopup.close()
       })
       .catch(err => console.log(`Ошибка при обновлении информации о пользователе: ${err}`))
       .finally(() => {
-        showLoadingState(false, addCardPopupSaveButton);
+        showLoadingState(false, editProfilePopupSaveButton);
       })
   }
 })
@@ -217,10 +216,12 @@ const loadAvatarPopup = new PopupWithForm(loadAvatarPopupSelector, {
       .then((info) => {
         userInfo.setUserAvatar({ avatar: info.avatar })
       })
+      .then(() => {
+        loadAvatarPopup.close();
+      })
       .catch(err => console.log(`Ошибка при замене аватара пользователя: ${err}`))
       .finally(() => {
-        showLoadingState(false, addCardPopupSaveButton);
-        loadAvatarPopup.close();
+        showLoadingState(false, loadAvatarPopupSaveButton);
       })
   }
 })
@@ -240,13 +241,16 @@ const showLoadingState = function(isLoading, button) {
   if (isLoading) {
     button.textContent = 'Сохранение...';
   } else {
-    return;
+    if (button === editProfilePopupSaveButton || button === loadAvatarPopupSaveButton) {
+      button.textContent = "Сохранить";
+    } else if (button === addCardPopupSaveButton) {
+      button.textContent = "Создать";
+    }
   }
 }
 
 // Добавление слушателей в попапы
 editProfilePopup.setEventListeners();
-/*addCardPopup.setEventListeners();*/
 showImagePopup.setEventListeners();
 loadAvatarPopup.setEventListeners();
 
