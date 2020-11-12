@@ -5,7 +5,7 @@
 С **использованием HTML, CSS и JavaScript** создан адаптивный интерактивный сайт Mesto - сервис для публикации фотографий.
 
 **Ссылка**
-https://clickesc.github.io/mesto/index.html
+https://clickesc.github.io/mesto/
 
 **Файловая организация**
 
